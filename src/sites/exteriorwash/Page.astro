@@ -14,7 +14,10 @@ const pageTitle = activeService
 const pageDescription = activeService
   ? `${activeService.shortEn} Call ${business.phone.display} for exterior cleaning in Shelton, Fairfield County and New Haven County.`
   : `Residential pressure washing, soft washing, roof washing, house washing and exterior cleaning by ${business.name}. Licensed and insured in Shelton, CT.`;
-const canonicalPath = activeService ? `/exteriorwash/${activeService.slug}` : "/exteriorwash";
+const canonicalPath = activeService ? `/${activeService.slug}/` : "/";
+const canonicalUrl = new URL(canonicalPath, business.currentSite).href;
+const sectionHref = (id: string) => (isServicePage ? `/#${id}` : `#${id}`);
+const serviceHref = (slug: string) => `/${slug}/`;
 const heroTitleEn = activeService ? activeService.titleEn : "Exterior washing for homes that need to look sharp again";
 const heroTitleEs = activeService ? activeService.titleEs : "Limpieza exterior para casas que deben verse impecables otra vez";
 const heroLeadEn = activeService
@@ -72,7 +75,7 @@ const localBusinessSchema = {
     ratingValue: business.rating,
     reviewCount: business.reviewCount,
   },
-  url: canonicalPath,
+  url: canonicalUrl,
 };
 const serviceSchema = activeService
   ? {
@@ -97,7 +100,7 @@ const serviceSchema = activeService
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={pageDescription} />
-    <link rel="canonical" href={canonicalPath} />
+    <link rel="canonical" href={canonicalUrl} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -117,15 +120,15 @@ const serviceSchema = activeService
     </div>
 
     <header class="site-header" aria-label="Main navigation">
-      <a class="brand" href="/exteriorwash" aria-label={`${business.shortName} home`}>
+      <a class="brand" href="/" aria-label={`${business.shortName} home`}>
         <img src={logo} alt={`${business.shortName} logo`} />
       </a>
       <nav class="nav-links" aria-label="Page sections">
-        <a href={isServicePage ? "/exteriorwash#services" : "#services"} data-en="All Services" data-es="Servicios">All Services</a>
-        <a href={isServicePage ? "/exteriorwash#work" : "#work"} data-en="Work" data-es="Trabajos">Work</a>
-        <a href={isServicePage ? "/exteriorwash#reviews" : "#reviews"} data-en="Reviews" data-es="Resenas">Reviews</a>
-        <a href={isServicePage ? "/exteriorwash#areas" : "#areas"} data-en="Areas" data-es="Areas">Areas</a>
-        <a href={isServicePage ? "/exteriorwash#estimate" : "#estimate"} data-en="Contact" data-es="Contacto">Contact</a>
+        <a href={sectionHref("services")} data-en="All Services" data-es="Servicios">All Services</a>
+        <a href={sectionHref("work")} data-en="Work" data-es="Trabajos">Work</a>
+        <a href={sectionHref("reviews")} data-en="Reviews" data-es="Resenas">Reviews</a>
+        <a href={sectionHref("areas")} data-en="Areas" data-es="Areas">Areas</a>
+        <a href={sectionHref("estimate")} data-en="Contact" data-es="Contacto">Contact</a>
       </nav>
       <div class="nav-actions">
         <button class="lang-toggle" type="button" data-lang-toggle aria-label="Switch language">ES</button>
@@ -234,7 +237,7 @@ const serviceSchema = activeService
           <div class="service-list">
             {services.map((service) => (
               <article class={`service-row reveal ${service.slug === activeService?.slug ? "is-active" : ""}`}>
-                <a href={`/exteriorwash/${service.slug}`}>
+                <a href={serviceHref(service.slug)}>
                   <div class="service-copy">
                     <span class="service-tag">{service.num} / {service.en.includes("Window") ? "Home Improvement" : "Exterior Cleaning"}</span>
                     <h3 data-en={service.en} data-es={service.es}>{service.en}</h3>
@@ -432,10 +435,10 @@ const serviceSchema = activeService
         </div>
         <div>
           <h3 data-en="Navigation" data-es="Navegacion">Navigation</h3>
-          <a href="/exteriorwash#services" data-en="Services" data-es="Servicios">Services</a>
-          <a href="/exteriorwash#work" data-en="Work" data-es="Trabajos">Work</a>
-          <a href="/exteriorwash#reviews" data-en="Reviews" data-es="Resenas">Reviews</a>
-          <a href="/exteriorwash#estimate" data-en="Contact" data-es="Contacto">Contact</a>
+          <a href="/#services" data-en="Services" data-es="Servicios">Services</a>
+          <a href="/#work" data-en="Work" data-es="Trabajos">Work</a>
+          <a href="/#reviews" data-en="Reviews" data-es="Resenas">Reviews</a>
+          <a href="/#estimate" data-en="Contact" data-es="Contacto">Contact</a>
         </div>
         <div>
           <h3 data-en="Contact" data-es="Contacto">Contact</h3>
