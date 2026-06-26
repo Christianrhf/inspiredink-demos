@@ -1,0 +1,1223 @@
+---
+import {
+  phone, address, epaNumber, since, owner,
+  services, reviews, processSteps, areas, sourceUrl,
+} from "./data";
+
+const logo     = "/images/cthp/logo.png";
+const family   = "/images/cthp/family.png";
+const heroBg   = "/images/cthp/gallery-1.jpg";
+const extMain  = "/images/cthp/exterior-main.jpg";
+const extMystic = "/images/cthp/exterior-mystic.jpg";
+const int1     = "/images/cthp/interior-1.jpg";
+const int2     = "/images/cthp/interior-2.jpg";
+const floorsImg = "/images/cthp/floors.jpg";
+
+const ytVideos = [
+  { id: "xX4_YHieEk4", title: "Exterior House Painting", titleEs: "Pintura Exterior" },
+  { id: "ggWUdB8bKPs", title: "Interior Painting — Montville, CT", titleEs: "Pintura Interior — Montville, CT" },
+  { id: "puHn8STG46Q", title: "Client Testimonial — Mystic, CT", titleEs: "Testimonio — Mystic, CT" },
+];
+
+const mapSrc = "https://maps.google.com/maps?q=919+Colonel+Ledyard+Highway+Ledyard+CT+06339&output=embed";
+
+const navLinks = [
+  ["Work", "Trabajos", "#work"],
+  ["Services", "Servicios", "#services"],
+  ["Reviews", "Reseñas", "#reviews"],
+  ["Videos", "Videos", "#videos"],
+  ["Contact", "Contacto", "#estimate"],
+];
+
+const marqueeItems = [
+  "Interior Painting", "Exterior Painting", "Cabinet Refinishing",
+  "Power Washing", "Deck Staining", "Floor Refinishing", "Commercial Painting",
+  "Pintura Interior", "Pintura Exterior", "Refinishado de Gabinetes",
+  "Lavado a Presión", "Tinción de Deck", "Pulido de Pisos", "Pintura Comercial",
+];
+---
+
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Connecticut House Painters LLC | SE Connecticut Painters Since 2001</title>
+  <meta name="description" content="EPA-certified, 5-star family painting contractor. Interior, exterior, cabinets, decks & commercial. Serving 30+ CT towns since 2001. Free estimates." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600;1,700&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<header class="nav" id="nav" aria-label="Main navigation">
+  <a class="nav-logo-link" href="#top" aria-label="Home">
+    <img src={logo} alt="Connecticut House Painters LLC" class="nav-logo" />
+  </a>
+  <nav class="nav-links" aria-label="Page sections">
+    {navLinks.map(([en, es, href]) => (
+      <a href={href} data-en={en} data-es={es}>{en}</a>
+    ))}
+  </nav>
+  <div class="nav-right">
+    <button class="ctrl" type="button" data-lang-toggle aria-label="Switch language">ES</button>
+    <button class="ctrl" type="button" data-theme-toggle aria-label="Toggle theme">◐</button>
+    <a class="nav-phone" href={phone.href}>{phone.display}</a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-bg" role="img" aria-label="Connecticut House Painters team working on a home exterior" style={`background-image: url('${heroBg}')`}></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="gold-rule" aria-hidden="true"></div>
+    <p class="hero-eye" data-en="Southeastern Connecticut · Since 2001 · EPA Certified" data-es="Sureste de Connecticut · Desde 2001 · Certificado EPA">
+      Southeastern Connecticut · Since 2001 · EPA Certified
+    </p>
+    <h1 data-en="Connecticut's House Painters." data-es="Los Pintores de Connecticut.">
+      Connecticut's<br/><em>House Painters.</em>
+    </h1>
+    <p class="hero-sub" data-en="Family-owned. EPA-certified. Trusted by homeowners across New London and Middlesex Counties for over 25 years." data-es="Negocio familiar. Certificado EPA. Con la confianza de propietarios en los condados de New London y Middlesex por más de 25 años.">
+      Family-owned. EPA-certified. Trusted by homeowners across New London<br/>and Middlesex Counties for over 25 years.
+    </p>
+    <div class="gold-rule" aria-hidden="true"></div>
+    <div class="hero-actions">
+      <a class="btn-hero" href="#estimate" data-en="Get a Free Estimate" data-es="Pedir Estimado Gratis">Get a Free Estimate</a>
+      <a class="hero-call" href={phone.href}>
+        <span data-en="Call now" data-es="Llama ahora">Call now</span>
+        <strong>{phone.display}</strong>
+      </a>
+    </div>
+  </div>
+  <div class="hero-badges">
+    <span data-en="★ 5-Star Rated" data-es="★ Calificación 5 Estrellas">★ 5-Star Rated</span>
+    <span>{epaNumber}</span>
+    <span data-en="Benjamin Moore & Sherwin-Williams" data-es="Benjamin Moore y Sherwin-Williams">Benjamin Moore &amp; Sherwin-Williams</span>
+    <span data-en="Fully Licensed & Insured" data-es="Licencia y Seguro Completo">Fully Licensed &amp; Insured</span>
+  </div>
+</section>
+
+<!-- ── MARQUEE ── -->
+<div class="marquee-belt" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="marquee-inner">
+      {[...marqueeItems, ...marqueeItems].map((item) => (
+        <span class="marquee-item">{item} <span class="marquee-dot">·</span></span>
+      ))}
+    </span>
+  </div>
+</div>
+
+<!-- ── INTRO / ABOUT ── -->
+<section class="section intro-section" id="about">
+  <div class="container intro-grid">
+    <div class="intro-copy reveal">
+      <p class="eyebrow" data-en="Family Owned Since 2001" data-es="Negocio Familiar Desde 2001">Family Owned Since 2001</p>
+      <h2 data-en="Craftsmanship runs in the family." data-es="La artesanía corre por la familia.">
+        Craftsmanship runs<br/>in the family.
+      </h2>
+      <p data-en="Javier Santos founded Connecticut House Painters with one goal: deliver the kind of paint job that makes a homeowner proud. Today, his family works alongside him bringing that same pride to every project across Southeastern Connecticut." data-es="Javier Santos fundó Connecticut House Painters con un objetivo: entregar el tipo de trabajo de pintura que hace a un propietario orgulloso. Hoy, su familia trabaja junto a él aportando esa misma dedicación a cada proyecto.">
+        Javier Santos founded Connecticut House Painters with one goal: deliver the kind of paint job that makes a homeowner proud. Today, his family works alongside him bringing that same pride to every project across Southeastern Connecticut.
+      </p>
+      <p data-en="EPA Lead-Safe certified. Licensed and insured. Benjamin Moore & Sherwin-Williams paints only. And a crew that leaves your home cleaner than they found it." data-es="Certificados por la EPA. Licencia y seguro completo. Solo pinturas Benjamin Moore y Sherwin-Williams. Y un equipo que deja tu hogar más limpio de lo que lo encontró.">
+        EPA Lead-Safe certified. Licensed and insured. Benjamin Moore &amp; Sherwin-Williams paints only. And a crew that leaves your home cleaner than they found it.
+      </p>
+      <div class="intro-stats">
+        <div><strong>25+</strong><span data-en="Years Experience" data-es="Años de Experiencia">Years Experience</span></div>
+        <div><strong>30+</strong><span data-en="CT Towns Served" data-es="Pueblos en CT">CT Towns Served</span></div>
+        <div><strong>★ 5</strong><span data-en="Star Rated" data-es="Estrellas">Star Rated</span></div>
+      </div>
+    </div>
+    <div class="intro-visual reveal delay-1">
+      <figure class="intro-photo">
+        <img src={int1} alt="Connecticut House Painters — interior finish work" loading="lazy" onerror="this.style.display='none'" />
+      </figure>
+      <figure class="intro-family-card">
+        <img src={family} alt="Owner Javier Santos & Family" loading="lazy" onerror="this.parentElement.style.display='none'" />
+        <figcaption data-en="Javier Santos & Family · Owner" data-es="Javier Santos y Familia · Dueño">Javier Santos &amp; Family · Owner</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ── PORTFOLIO GRID ── -->
+<section class="section section-alt" id="work">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow" data-en="Portfolio" data-es="Portafolio">Portfolio</p>
+      <h2 data-en="Real Connecticut homes. Real results." data-es="Hogares reales de Connecticut. Resultados reales.">
+        Real Connecticut homes.<br/><em>Real results.</em>
+      </h2>
+    </div>
+  </div>
+  <div class="portfolio-grid">
+    <figure class="port-tile port-large reveal">
+      <img src={extMystic} alt="Exterior painting project — Connecticut House Painters crew" loading="lazy" onerror="this.style.display='none'" />
+      <figcaption>
+        <span class="port-tag" data-en="Exterior" data-es="Exterior">Exterior</span>
+        <strong data-en="Cape Cod — Mystic, CT" data-es="Cape Cod — Mystic, CT">Cape Cod — Mystic, CT</strong>
+      </figcaption>
+    </figure>
+    <div class="port-stack">
+      <figure class="port-tile port-sm reveal delay-1">
+        <img src={extMain} alt="Exterior painting Connecticut — 2026 project" loading="lazy" onerror="this.style.display='none'" />
+        <figcaption>
+          <span class="port-tag" data-en="Exterior" data-es="Exterior">Exterior</span>
+          <strong data-en="Colonial — Ledyard, CT" data-es="Colonial — Ledyard, CT">Colonial — Ledyard, CT</strong>
+        </figcaption>
+      </figure>
+      <figure class="port-tile port-sm reveal delay-2">
+        <img src={int2} alt="Interior painting Connecticut — staircase and trim" loading="lazy" onerror="this.style.display='none'" />
+        <figcaption>
+          <span class="port-tag" data-en="Interior" data-es="Interior">Interior</span>
+          <strong data-en="Foyer & Trim — Groton, CT" data-es="Entrada y Molduras — Groton, CT">Foyer &amp; Trim — Groton, CT</strong>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+  <div class="container" style="margin-top: 1.5rem; text-align:center;">
+    <a class="btn-outline" href={`${sourceUrl}galleries`} target="_blank" rel="noreferrer" data-en="View Full Gallery →" data-es="Ver Galería Completa →">View Full Gallery →</a>
+  </div>
+</section>
+
+<!-- ── SERVICES ── -->
+<section class="section section-brand" id="services">
+  <div class="container services-layout">
+    <div class="services-intro reveal">
+      <p class="eyebrow eyebrow-light" data-en="What We Do" data-es="Lo Que Hacemos">What We Do</p>
+      <h2 class="light" data-en="Seven services. One family. One standard." data-es="Siete servicios. Una familia. Un estándar.">
+        Seven services.<br/>One family.<br/><em>One standard.</em>
+      </h2>
+      <figure class="services-photo">
+        <img src={floorsImg} alt="Hardwood floor refinishing by Connecticut House Painters" loading="lazy" onerror="this.style.display='none'" />
+        <figcaption data-en="Hardwood floor refinishing — Waterford, CT" data-es="Pulido de pisos — Waterford, CT">
+          Hardwood floor refinishing — Waterford, CT
+        </figcaption>
+      </figure>
+    </div>
+    <ol class="service-list reveal delay-1">
+      {services.map((s) => (
+        <li class="service-item">
+          <span class="svc-num">{s.num}</span>
+          <div>
+            <strong data-en={s.en} data-es={s.es}>{s.en}</strong>
+            <p data-en={s.descEn} data-es={s.descEs}>{s.descEn}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<!-- ── REVIEWS ── -->
+<section class="section" id="reviews">
+  <div class="container">
+    <div class="section-head reveal" style="text-align:center; margin-inline:auto;">
+      <p class="eyebrow" style="justify-content:center" data-en="What Clients Say" data-es="Lo Que Dicen los Clientes">What Clients Say</p>
+      <h2 data-en="Connecticut homeowners speak." data-es="Propietarios de Connecticut hablan.">
+        Connecticut homeowners speak.
+      </h2>
+    </div>
+    <div class="review-grid">
+      {reviews.slice(0, 3).map((r, i) => (
+        <article class={`review-card reveal${i > 0 ? ` delay-${i}` : ''}`}>
+          <div class="review-stars">★★★★★</div>
+          <blockquote>
+            <p data-en={`"${r.quoteEn}"`} data-es={`"${r.quoteEs}"`}>"{r.quoteEn}"</p>
+          </blockquote>
+          <footer>
+            <strong>{r.name}</strong>
+            <span>{r.location}</span>
+          </footer>
+        </article>
+      ))}
+    </div>
+    <p class="reviews-more reveal">
+      <a href={`${sourceUrl}testimonials`} target="_blank" rel="noreferrer" data-en="Read all reviews at connecticuthousepainters.com →" data-es="Ver todas las reseñas en connecticuthousepainters.com →">
+        Read all reviews at connecticuthousepainters.com →
+      </a>
+    </p>
+  </div>
+</section>
+
+<!-- ── PROCESS ── -->
+<section class="section section-alt" id="process">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow" data-en="How We Work" data-es="Cómo Trabajamos">How We Work</p>
+      <h2 data-en="From first call to clean finish." data-es="Desde la primera llamada hasta el acabado limpio.">
+        From first call<br/>to clean finish.
+      </h2>
+    </div>
+    <ol class="process-list">
+      {processSteps.map(([num, en, es, descEn, descEs], i) => (
+        <li class={`process-item reveal${i > 0 ? ` delay-${Math.min(i, 2)}` : ''}`}>
+          <span class="proc-num">{num}</span>
+          <h3 data-en={en} data-es={es}>{en}</h3>
+          <p data-en={descEn} data-es={descEs}>{descEn}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<!-- ── YOUTUBE ── -->
+<section class="section section-dark" id="videos">
+  <div class="container">
+    <div class="section-head reveal" style="text-align:center;margin-inline:auto;">
+      <p class="eyebrow eyebrow-light" style="justify-content:center" data-en="Watch Our Work" data-es="Mira Nuestros Trabajos">Watch Our Work</p>
+      <h2 class="light" data-en="See the difference in every project." data-es="Mira la diferencia en cada proyecto.">
+        See the difference<br/><em>in every project.</em>
+      </h2>
+    </div>
+    <div class="video-grid">
+      {ytVideos.map((v, i) => (
+        <div class={`video-card reveal${i > 0 ? ` delay-${i}` : ''}`}>
+          <div class="video-wrap">
+            <iframe
+              src={`https://www.youtube.com/embed/${v.id}`}
+              title={v.title}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              loading="lazy"
+            ></iframe>
+          </div>
+          <p class="video-title" data-en={v.title} data-es={v.titleEs}>{v.title}</p>
+        </div>
+      ))}
+    </div>
+    <p class="yt-link reveal" style="text-align:center; margin-top:2rem;">
+      <a href="https://www.youtube.com/@Connecticuthousepainters" target="_blank" rel="noreferrer" data-en="Subscribe on YouTube →" data-es="Suscribirse en YouTube →">
+        Subscribe on YouTube →
+      </a>
+    </p>
+  </div>
+</section>
+
+<!-- ── MAP ── -->
+<section class="section section-map" id="map">
+  <div class="container map-header reveal">
+    <div>
+      <p class="eyebrow" data-en="Find Us" data-es="Encuéntranos">Find Us</p>
+      <h2 data-en="Serving SE Connecticut." data-es="Sirviendo al Sureste de Connecticut.">Serving SE Connecticut.</h2>
+      <address>
+        <a href="https://maps.google.com/?q=919+Colonel+Ledyard+Highway+Ledyard+CT+06339" target="_blank" rel="noreferrer">
+          919 Colonel Ledyard Hwy, Ledyard, CT 06339
+        </a>
+      </address>
+    </div>
+    <div class="coverage-pills-sm">
+      {areas.slice(0, 14).map((town) => (
+        <span>{town}</span>
+      ))}
+      <span class="more-towns" data-en="+14 more towns" data-es="+14 pueblos más">+14 more towns</span>
+    </div>
+  </div>
+  <div class="map-frame">
+    <iframe
+      src={mapSrc}
+      title="Connecticut House Painters LLC location — 919 Colonel Ledyard Hwy, Ledyard, CT"
+      allowfullscreen
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+    ></iframe>
+  </div>
+</section>
+
+<!-- ── CTA / QUOTE ── -->
+<section class="section section-brand" id="estimate">
+  <div class="container cta-layout">
+    <div class="cta-copy reveal">
+      <p class="eyebrow eyebrow-light" data-en="Free Estimate" data-es="Estimado Gratis">Free Estimate</p>
+      <h2 class="light" data-en="Ready for a fresh coat?" data-es="¿Listo para una mano nueva?">
+        Ready for a<br/><em>fresh coat?</em>
+      </h2>
+      <p class="cta-lead" data-en="Call Javier directly or fill out the form. We'll assess your project and give you clear pricing with no pressure." data-es="Llama a Javier directamente o llena el formulario. Evaluaremos tu proyecto y te daremos precios claros sin presión.">
+        Call Javier directly or fill out the form. We'll assess your project and give you clear pricing with no pressure.
+      </p>
+      <a class="cta-phone" href={phone.href}>
+        <span data-en="Call for a free estimate" data-es="Llama para un estimado gratis">Call for a free estimate</span>
+        <strong>{phone.display}</strong>
+      </a>
+      <address class="cta-addr">{address}</address>
+    </div>
+    <form class="cta-form reveal delay-1" aria-label="Decorative estimate form">
+      <h3 data-en="Tell us about your project" data-es="Cuéntanos tu proyecto">Tell us about your project</h3>
+      <div class="form-row">
+        <label>
+          <span data-en="Name" data-es="Nombre">Name</span>
+          <input type="text" placeholder="Your name" data-placeholder-en="Your name" data-placeholder-es="Tu nombre" />
+        </label>
+        <label>
+          <span data-en="Phone" data-es="Teléfono">Phone</span>
+          <input type="tel" placeholder="Best callback number" data-placeholder-en="Best callback number" data-placeholder-es="Número de contacto" />
+        </label>
+      </div>
+      <label>
+        <span data-en="Town / City" data-es="Pueblo / Ciudad">Town / City</span>
+        <input type="text" placeholder="Mystic, Groton, Stonington..." data-placeholder-en="Mystic, Groton, Stonington..." data-placeholder-es="Mystic, Groton, Stonington..." />
+      </label>
+      <label>
+        <span data-en="Service" data-es="Servicio">Service</span>
+        <select>
+          <option data-en="Interior Painting" data-es="Pintura Interior">Interior Painting</option>
+          <option data-en="Exterior Painting" data-es="Pintura Exterior">Exterior Painting</option>
+          <option data-en="Cabinet Refinishing" data-es="Gabinetes">Cabinet Refinishing</option>
+          <option data-en="Deck Staining" data-es="Deck">Deck Staining</option>
+          <option data-en="Power Washing" data-es="Lavado a Presión">Power Washing</option>
+          <option data-en="Floor Refinishing" data-es="Pisos">Floor Refinishing</option>
+          <option data-en="Commercial" data-es="Comercial">Commercial</option>
+        </select>
+      </label>
+      <label class="full">
+        <span data-en="Notes" data-es="Notas">Notes</span>
+        <textarea rows="3" placeholder="Project details, timeline, questions..." data-placeholder-en="Project details, timeline, questions..." data-placeholder-es="Detalles del proyecto, tiempo, preguntas..."></textarea>
+      </label>
+      <button type="button" data-en="Request My Free Estimate" data-es="Pedir Mi Estimado Gratis">Request My Free Estimate</button>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<!-- ── FOOTER ── -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <img src={logo} alt="Connecticut House Painters LLC" class="footer-logo" />
+      <div>
+        <strong>Connecticut House Painters LLC</strong>
+        <span>{epaNumber}</span>
+        <span data-en="Serving SE Connecticut since 2001" data-es="Sirviendo al sureste de Connecticut desde 2001">Serving SE Connecticut since 2001</span>
+        <address><a href={phone.href}>{phone.display}</a> · {address}</address>
+      </div>
+    </div>
+    <nav class="footer-nav">
+      {navLinks.map(([en, es, href]) => (
+        <a href={href} data-en={en} data-es={es}>{en}</a>
+      ))}
+      <a href={sourceUrl} target="_blank" rel="noreferrer" data-en="Current Site" data-es="Sitio Actual">Current Site</a>
+      <a href="https://www.youtube.com/@Connecticuthousepainters" target="_blank" rel="noreferrer">YouTube</a>
+    </nav>
+    <p class="footer-copy">© {new Date().getFullYear()} Connecticut House Painters LLC. <span data-en="All rights reserved." data-es="Todos los derechos reservados.">All rights reserved.</span></p>
+  </div>
+</footer>
+
+<!-- ── STICKY CTA ── -->
+<a class="sticky-call" href={phone.href} aria-label="Call Connecticut House Painters for a free estimate">
+  <span data-en="Free Estimate" data-es="Estimado Gratis">Free Estimate</span>
+  <strong>{phone.display}</strong>
+</a>
+
+<style is:global>
+/* ── TOKENS ── */
+:root {
+  --cream:   #f7f2eb;
+  --cream-2: #ede6da;
+  --ink:     #1c0d10;
+  --ink-2:   #3a2228;
+  --muted:   #7a6568;
+  --brand:   #6e1a2a;
+  --brand-2: #530f1e;
+  --gold:    #c8992a;
+  --gold-lt: #e0b03c;
+  --gold-dim:#9a7320;
+  --border:  rgba(110,26,42,0.13);
+  --shadow:  0 2px 20px rgba(28,13,16,0.08);
+  --shadow-h:0 8px 40px rgba(28,13,16,0.16);
+  --px:      clamp(1.5rem, 5vw, 5rem);
+  --py:      clamp(4rem, 7vw, 7rem);
+  --nav-h:   72px;
+  --font-d:  'Cormorant Garamond', Georgia, serif;
+  --font-s:  'Hanken Grotesk', system-ui, sans-serif;
+}
+[data-theme="dark"] {
+  --cream:   #1c0d10;
+  --cream-2: #2a1318;
+  --ink:     #f0e8df;
+  --ink-2:   #d8c8be;
+  --muted:   #9a8880;
+  --border:  rgba(255,255,255,0.08);
+  --shadow:  0 2px 20px rgba(0,0,0,0.3);
+  --shadow-h:0 8px 40px rgba(0,0,0,0.5);
+}
+
+/* ── RESET ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; min-width: 320px; }
+body {
+  font-family: var(--font-s);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--cream);
+  padding-top: var(--nav-h);
+  transition: background .3s, color .3s;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: none; }
+address { font-style: normal; }
+button { cursor: pointer; font: inherit; }
+h1, h2, h3 { font-family: var(--font-d); font-weight: 400; line-height: 1.1; }
+h1 em, h2 em { font-style: italic; color: var(--brand); }
+[data-theme="dark"] h1 em, [data-theme="dark"] h2 em { color: var(--gold-lt); }
+
+.container { max-width: 1220px; margin-inline: auto; padding-inline: var(--px); }
+
+/* ── EYEBROW ── */
+.eyebrow {
+  font-family: var(--font-s);
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--brand);
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  margin-bottom: .75rem;
+}
+.eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 24px; height: 1.5px;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+.eyebrow-light { color: var(--gold-lt); }
+.eyebrow-light::before { background: var(--gold-lt); }
+
+.section-head { max-width: 600px; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+.section-head h2 { font-size: clamp(2rem, 4vw, 3.2rem); margin-bottom: .75rem; }
+
+.section { padding-block: var(--py); }
+.section-alt { background: var(--cream-2); }
+.section-brand { background: var(--brand); color: #fff; }
+.section-brand .eyebrow { color: var(--gold-lt); }
+.section-dark { background: var(--ink); color: #fff; }
+
+h2.light { color: #fff; }
+h2.light em { color: var(--gold-lt); }
+
+/* ── NAV ── */
+.nav {
+  position: fixed;
+  inset-block-start: 0; inset-inline: 0;
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: var(--px);
+  gap: 1rem;
+  z-index: 100;
+  background: var(--cream);
+  border-bottom: 1px solid var(--border);
+  transition: background .3s, border-color .3s;
+}
+.nav.transparent {
+  background: transparent;
+  border-color: transparent;
+}
+.nav-logo { height: 48px; width: auto; object-fit: contain; }
+.nav-links {
+  display: flex;
+  gap: 1.75rem;
+}
+.nav-links a {
+  font-size: .84rem;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: .04em;
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--ink); }
+[data-theme="dark"] .nav-links a:hover { color: var(--cream); }
+.nav.transparent .nav-links a { color: rgba(255,255,255,.7); }
+.nav.transparent .nav-links a:hover { color: #fff; }
+
+.nav-right { display: flex; align-items: center; gap: .5rem; flex-shrink: 0; }
+.ctrl {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  color: var(--muted);
+  font-size: .76rem;
+  font-weight: 600;
+  padding: .32rem .55rem;
+  transition: border-color .2s, color .2s;
+}
+.ctrl:hover { border-color: var(--brand); color: var(--brand); }
+[data-theme="dark"] .ctrl:hover { border-color: var(--gold); color: var(--gold); }
+.nav.transparent .ctrl { border-color: rgba(255,255,255,.3); color: rgba(255,255,255,.7); }
+
+.nav-phone {
+  background: var(--brand);
+  color: #fff;
+  font-size: .83rem;
+  font-weight: 600;
+  padding: .42rem 1rem;
+  border-radius: 6px;
+  transition: background .2s;
+  white-space: nowrap;
+}
+.nav-phone:hover { background: var(--brand-2); }
+.nav.transparent .nav-phone { background: rgba(110,26,42,.85); }
+
+@media (max-width: 860px) { .nav-links { display: none; } }
+@media (max-width: 480px) {
+  .nav-logo { height: 38px; }
+  .nav-phone { font-size: .75rem; padding: .35rem .7rem; }
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100svh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: scale(1.04);
+  transition: transform 8s ease;
+}
+.hero-bg.loaded { transform: scale(1); }
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(28,13,16,.55) 0%, rgba(28,13,16,.7) 60%, rgba(28,13,16,.85) 100%);
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: var(--py) var(--px) 3rem;
+  max-width: 860px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+.gold-rule {
+  width: 80px;
+  height: 1px;
+  background: var(--gold);
+  opacity: .7;
+}
+.hero-eye {
+  font-size: .7rem;
+  font-weight: 600;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.7);
+  font-family: var(--font-s);
+}
+.hero h1 {
+  font-size: clamp(3rem, 8vw, 6rem);
+  color: #fff;
+  line-height: 1.04;
+  font-weight: 400;
+}
+.hero h1 em { color: var(--gold-lt); font-style: italic; -webkit-text-fill-color: var(--gold-lt); }
+.hero-sub {
+  font-size: clamp(.9rem, 1.5vw, 1.1rem);
+  color: rgba(255,255,255,.75);
+  line-height: 1.65;
+  font-family: var(--font-s);
+  font-weight: 300;
+}
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: .5rem;
+}
+.btn-hero {
+  background: var(--brand);
+  color: #fff;
+  font-family: var(--font-s);
+  font-size: .9rem;
+  font-weight: 600;
+  padding: .8rem 1.75rem;
+  border-radius: 6px;
+  letter-spacing: .04em;
+  transition: background .2s, transform .15s;
+  border: 2px solid transparent;
+}
+.btn-hero:hover { background: var(--brand-2); transform: translateY(-1px); }
+.hero-call {
+  display: flex;
+  flex-direction: column;
+  color: rgba(255,255,255,.85);
+  font-family: var(--font-s);
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  gap: .1rem;
+  padding: .5rem 1rem;
+  border: 1px solid rgba(255,255,255,.3);
+  border-radius: 6px;
+  transition: border-color .2s, background .2s;
+}
+.hero-call:hover { border-color: rgba(255,255,255,.6); background: rgba(255,255,255,.08); }
+.hero-call strong { font-family: var(--font-d); font-size: 1.3rem; font-weight: 400; color: #fff; letter-spacing: 0; text-transform: none; }
+
+.hero-badges {
+  position: absolute;
+  bottom: 1.5rem; left: 0; right: 0;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: .75rem;
+  padding-inline: var(--px);
+}
+.hero-badges > span {
+  font-family: var(--font-s);
+  font-size: .7rem;
+  font-weight: 500;
+  color: rgba(255,255,255,.65);
+  letter-spacing: .04em;
+}
+.hero-badges > span:not(:last-child)::after {
+  content: ' ·';
+  margin-left: .75rem;
+  opacity: .4;
+}
+
+/* ── MARQUEE ── */
+.marquee-belt {
+  background: var(--brand);
+  overflow: hidden;
+  padding-block: .55rem;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.marquee-track { white-space: nowrap; }
+.marquee-inner {
+  display: inline-block;
+  animation: marquee 40s linear infinite;
+}
+.marquee-item {
+  font-family: var(--font-s);
+  font-size: .75rem;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.85);
+  margin-right: 1.5rem;
+}
+.marquee-dot { color: var(--gold); margin-left: 1.5rem; }
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-belt:hover .marquee-inner { animation-play-state: paused; }
+
+/* ── INTRO ── */
+.intro-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(3rem, 6vw, 6rem);
+  align-items: start;
+}
+.intro-copy h2 { font-size: clamp(2rem, 4vw, 3rem); margin-block: .5rem 1.25rem; }
+.intro-copy p { color: var(--muted); font-size: .97rem; margin-bottom: .9rem; }
+
+.intro-stats {
+  display: flex;
+  gap: 2.5rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+.intro-stats div { display: flex; flex-direction: column; gap: .15rem; }
+.intro-stats strong {
+  font-family: var(--font-d);
+  font-size: 2.8rem;
+  font-weight: 400;
+  color: var(--brand);
+  line-height: 1;
+}
+[data-theme="dark"] .intro-stats strong { color: var(--gold-lt); }
+.intro-stats span { font-size: .72rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+
+.intro-visual { display: flex; flex-direction: column; gap: .75rem; }
+.intro-photo {
+  border-radius: 10px;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  background: var(--brand);
+}
+.intro-photo img { width: 100%; height: 100%; object-fit: cover; }
+.intro-family-card {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  background: var(--cream-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: .7rem 1rem;
+}
+[data-theme="dark"] .intro-family-card { background: var(--cream-2); }
+.intro-family-card img {
+  width: 54px; height: 54px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--gold);
+  flex-shrink: 0;
+}
+.intro-family-card figcaption { font-size: .82rem; font-weight: 600; color: var(--brand); line-height: 1.3; }
+[data-theme="dark"] .intro-family-card figcaption { color: var(--gold-lt); }
+
+@media (max-width: 820px) { .intro-grid { grid-template-columns: 1fr; } }
+
+/* ── PORTFOLIO ── */
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: .6rem;
+  max-width: 1220px;
+  margin: 0 auto;
+  padding-inline: .6rem;
+  margin-top: 2.5rem;
+}
+.port-stack { display: flex; flex-direction: column; gap: .6rem; }
+.port-tile {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--brand);
+  cursor: default;
+}
+.port-large { aspect-ratio: 3/2; }
+.port-sm { aspect-ratio: 4/3; flex: 1; }
+.port-tile img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .5s ease;
+}
+.port-tile:hover img { transform: scale(1.04); }
+.port-tile figcaption {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to top, rgba(28,13,16,.75), transparent);
+  color: #fff;
+  padding: 1.25rem 1rem .75rem;
+  z-index: 1;
+}
+.port-tag {
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--gold-lt);
+  display: block;
+  margin-bottom: .2rem;
+}
+.port-tile figcaption strong { font-family: var(--font-d); font-size: 1.15rem; font-weight: 400; }
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  border: 1.5px solid var(--border);
+  color: var(--brand);
+  font-size: .85rem;
+  font-weight: 600;
+  padding: .6rem 1.4rem;
+  border-radius: 6px;
+  letter-spacing: .04em;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.btn-outline:hover { background: var(--brand); color: #fff; border-color: var(--brand); }
+[data-theme="dark"] .btn-outline { color: var(--gold-lt); border-color: rgba(255,255,255,.15); }
+[data-theme="dark"] .btn-outline:hover { background: var(--gold); border-color: var(--gold); color: #fff; }
+
+@media (max-width: 680px) {
+  .portfolio-grid { grid-template-columns: 1fr; }
+  .port-stack { flex-direction: row; }
+  .port-sm { aspect-ratio: 4/3; }
+}
+
+/* ── SERVICES ── */
+.services-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: clamp(3rem, 6vw, 6rem);
+  align-items: start;
+}
+.services-intro h2 { font-size: clamp(2rem, 3.5vw, 2.8rem); margin-block: .5rem 1.5rem; }
+.services-photo {
+  border-radius: 10px;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  background: var(--brand-2);
+  margin-top: 2rem;
+}
+.services-photo img { width: 100%; height: 100%; object-fit: cover; }
+.services-photo figcaption {
+  font-size: .75rem;
+  color: rgba(255,255,255,.6);
+  padding: .5rem .75rem;
+  font-family: var(--font-s);
+  background: rgba(0,0,0,.2);
+}
+
+.service-list { list-style: none; display: flex; flex-direction: column; }
+.service-item {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+  padding-block: 1.25rem;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+}
+.service-item:last-child { border-bottom: none; }
+.svc-num {
+  font-family: var(--font-d);
+  font-size: 2rem;
+  font-weight: 400;
+  color: var(--gold);
+  opacity: .5;
+  line-height: 1.1;
+  min-width: 2.2rem;
+  flex-shrink: 0;
+}
+.service-item strong {
+  display: block;
+  font-family: var(--font-s);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: .3rem;
+}
+.service-item p {
+  font-size: .875rem;
+  color: rgba(255,255,255,.65);
+  line-height: 1.5;
+}
+
+@media (max-width: 820px) { .services-layout { grid-template-columns: 1fr; } }
+
+/* ── REVIEWS ── */
+.review-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+.review-card {
+  background: var(--cream-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: box-shadow .25s, transform .2s;
+}
+[data-theme="dark"] .review-card { background: var(--cream-2); }
+.review-card:hover { box-shadow: var(--shadow-h); transform: translateY(-2px); }
+.review-stars { color: var(--gold); font-size: 1.1rem; letter-spacing: .1em; }
+.review-card blockquote p {
+  font-family: var(--font-d);
+  font-size: 1.2rem;
+  font-style: italic;
+  color: var(--ink);
+  line-height: 1.5;
+}
+[data-theme="dark"] .review-card blockquote p { color: var(--ink); }
+.review-card footer { margin-top: auto; padding-top: .75rem; border-top: 1px solid var(--border); }
+.review-card footer strong { display: block; font-size: .9rem; font-weight: 600; color: var(--brand); }
+[data-theme="dark"] .review-card footer strong { color: var(--gold-lt); }
+.review-card footer span { font-size: .8rem; color: var(--muted); }
+.reviews-more { margin-top: 1.75rem; font-size: .88rem; text-align: center; }
+.reviews-more a { color: var(--brand); font-weight: 600; }
+[data-theme="dark"] .reviews-more a { color: var(--gold-lt); }
+
+/* ── PROCESS ── */
+.process-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: .5rem;
+  counter-reset: proc;
+  margin-top: 3rem;
+}
+.process-item {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.5rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  transition: box-shadow .25s, transform .2s;
+}
+[data-theme="dark"] .process-item { background: var(--cream); }
+.process-item:hover { box-shadow: var(--shadow-h); transform: translateY(-2px); }
+.proc-num {
+  font-family: var(--font-d);
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: var(--gold);
+  opacity: .45;
+  line-height: 1;
+}
+.process-item h3 { font-family: var(--font-s); font-size: .95rem; font-weight: 600; color: var(--brand); }
+[data-theme="dark"] .process-item h3 { color: var(--gold-lt); }
+.process-item p { font-size: .82rem; color: var(--muted); line-height: 1.5; }
+
+@media (max-width: 900px) { .process-list { grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 480px) { .process-list { grid-template-columns: 1fr; } }
+
+/* ── VIDEOS ── */
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-top: 3rem;
+}
+.video-card {}
+.video-wrap {
+  position: relative;
+  aspect-ratio: 16/9;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #000;
+}
+.video-wrap iframe {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  border: none;
+}
+.video-title {
+  margin-top: .75rem;
+  font-size: .84rem;
+  font-weight: 500;
+  color: rgba(255,255,255,.7);
+  font-family: var(--font-s);
+}
+.yt-link a { color: var(--gold-lt); font-weight: 600; font-size: .9rem; }
+.yt-link a:hover { color: var(--gold); }
+
+@media (max-width: 820px) { .video-grid { grid-template-columns: 1fr; } }
+@media (max-width: 480px) { .video-grid { grid-template-columns: 1fr; } }
+
+/* ── MAP ── */
+.section-map { padding-bottom: 0; }
+.map-header {
+  display: flex;
+  gap: 3rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding-bottom: 2rem;
+}
+.map-header h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); margin-block: .25rem .5rem; }
+.map-header address a { color: var(--brand); font-size: .9rem; font-weight: 500; }
+[data-theme="dark"] .map-header address a { color: var(--gold-lt); }
+.coverage-pills-sm {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  max-width: 420px;
+}
+.coverage-pills-sm > span {
+  background: var(--cream-2);
+  border: 1px solid var(--border);
+  font-size: .75rem;
+  color: var(--muted);
+  padding: .2rem .6rem;
+  border-radius: 99px;
+  font-family: var(--font-s);
+}
+.more-towns { color: var(--brand) !important; font-weight: 600 !important; border-color: var(--brand) !important; }
+[data-theme="dark"] .more-towns { color: var(--gold-lt) !important; border-color: var(--gold-lt) !important; }
+.map-frame {
+  margin-top: 2rem;
+  height: 420px;
+  border-radius: 10px 10px 0 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.map-frame iframe { width: 100%; height: 100%; border: none; display: block; }
+
+/* ── CTA FORM ── */
+.cta-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: clamp(3rem, 6vw, 6rem);
+  align-items: start;
+}
+.cta-copy h2 { font-size: clamp(2rem, 4vw, 3.2rem); margin-block: .5rem 1.25rem; }
+.cta-lead { color: rgba(255,255,255,.75); font-size: .97rem; margin-bottom: 1.5rem; }
+
+.cta-phone {
+  display: flex;
+  flex-direction: column;
+  gap: .1rem;
+  margin-bottom: 1rem;
+}
+.cta-phone span { font-size: .7rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.55); }
+.cta-phone strong { font-family: var(--font-d); font-size: 2.5rem; font-weight: 400; color: var(--gold-lt); line-height: 1.1; }
+.cta-addr { font-size: .82rem; color: rgba(255,255,255,.45); }
+
+.cta-form {
+  background: var(--cream);
+  border-radius: 14px;
+  padding: 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: .9rem;
+  box-shadow: 0 8px 50px rgba(0,0,0,.25);
+}
+.cta-form h3 { font-family: var(--font-d); font-size: 1.4rem; color: var(--ink); }
+[data-theme="dark"] .cta-form h3 { color: var(--ink); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; }
+@media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+.cta-form label { display: flex; flex-direction: column; gap: .3rem; }
+.full { grid-column: 1/-1; }
+.cta-form label span {
+  font-size: .72rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--muted);
+}
+.cta-form input, .cta-form select, .cta-form textarea {
+  font: inherit; font-size: .9rem;
+  color: var(--ink); background: var(--cream-2);
+  border: 1px solid var(--border); border-radius: 7px;
+  padding: .6rem .85rem; outline: none; width: 100%;
+  transition: border-color .2s;
+}
+[data-theme="dark"] .cta-form input, [data-theme="dark"] .cta-form select, [data-theme="dark"] .cta-form textarea {
+  color: var(--ink); background: var(--cream-2);
+}
+.cta-form input:focus, .cta-form select:focus, .cta-form textarea:focus { border-color: var(--brand); }
+.cta-form button {
+  background: var(--brand); color: #fff;
+  font-family: var(--font-s); font-size: .9rem; font-weight: 700;
+  padding: .8rem; border: none; border-radius: 7px;
+  transition: background .2s; letter-spacing: .04em;
+  margin-top: .25rem;
+}
+.cta-form button:hover { background: var(--brand-2); }
+
+@media (max-width: 820px) { .cta-layout { grid-template-columns: 1fr; } }
+
+/* ── FOOTER ── */
+.site-footer {
+  background: var(--ink-2);
+  color: rgba(255,255,255,.7);
+  padding-block: 3rem 2rem;
+}
+.footer-inner { display: flex; flex-direction: column; gap: 2rem; }
+.footer-brand { display: flex; gap: 1.25rem; align-items: flex-start; }
+.footer-logo { height: 56px; width: auto; object-fit: contain; filter: brightness(0) invert(1); opacity: .8; flex-shrink: 0; }
+.footer-brand div { display: flex; flex-direction: column; gap: .3rem; }
+.footer-brand strong { color: #fff; font-family: var(--font-d); font-size: 1.1rem; font-weight: 400; }
+.footer-brand span { font-size: .8rem; }
+.footer-brand address a { color: var(--gold-lt); font-size: .85rem; }
+.footer-nav {
+  display: flex; flex-wrap: wrap;
+  gap: .4rem 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+.footer-nav a { font-size: .84rem; transition: color .2s; }
+.footer-nav a:hover { color: var(--gold-lt); }
+.footer-copy { font-size: .76rem; color: rgba(255,255,255,.3); padding-top: 1rem; border-top: 1px solid rgba(255,255,255,.06); }
+
+/* ── STICKY ── */
+.sticky-call {
+  position: fixed;
+  bottom: 1.25rem; right: 1.25rem;
+  display: flex; flex-direction: column; align-items: flex-end; gap: .05rem;
+  background: var(--brand);
+  color: #fff;
+  padding: .7rem 1.2rem;
+  border-radius: 9px;
+  box-shadow: 0 4px 24px rgba(110,26,42,.4);
+  z-index: 99;
+  transition: background .2s, transform .15s;
+}
+.sticky-call:hover { background: var(--brand-2); transform: translateY(-2px); }
+.sticky-call span { font-size: .68rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; opacity: .75; }
+.sticky-call strong { font-family: var(--font-d); font-size: 1.15rem; font-weight: 400; line-height: 1; }
+
+/* ── REVEALS ── */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity .65s ease, transform .65s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+  .delay-1 { transition-delay: .12s; }
+  .delay-2 { transition-delay: .24s; }
+}
+</style>
+
+<script>
+  const root = document.documentElement;
+  const nav  = document.getElementById('nav') as HTMLElement;
+  const langBtn  = document.querySelector('[data-lang-toggle]') as HTMLButtonElement;
+  const themeBtn = document.querySelector('[data-theme-toggle]') as HTMLButtonElement;
+  const storedLang  = localStorage.getItem('cthp-lang')  || 'en';
+  const storedTheme = localStorage.getItem('cthp-theme') || 'light';
+
+  function applyLang(lang: string) {
+    root.lang = lang;
+    document.querySelectorAll<HTMLElement>('[data-en][data-es]').forEach(el => {
+      const val = el.getAttribute(`data-${lang}`);
+      if (val) el.textContent = val;
+    });
+    document.querySelectorAll<HTMLInputElement>('[data-placeholder-en][data-placeholder-es]').forEach(el => {
+      const val = el.getAttribute(`data-placeholder-${lang}`);
+      if (val) el.placeholder = val;
+    });
+    if (langBtn) langBtn.textContent = lang === 'en' ? 'ES' : 'EN';
+    localStorage.setItem('cthp-lang', lang);
+  }
+
+  function applyTheme(theme: string) {
+    root.dataset.theme = theme;
+    localStorage.setItem('cthp-theme', theme);
+  }
+
+  applyLang(storedLang);
+  applyTheme(storedTheme);
+  langBtn?.addEventListener('click', () => applyLang(root.lang === 'en' ? 'es' : 'en'));
+  themeBtn?.addEventListener('click', () => applyTheme(root.dataset.theme === 'dark' ? 'light' : 'dark'));
+
+  // Nav transparency on hero
+  function updateNav() {
+    const scrolled = window.scrollY > 60;
+    nav.classList.toggle('transparent', !scrolled);
+  }
+  updateNav();
+  window.addEventListener('scroll', updateNav, { passive: true });
+
+  // Hero bg slow zoom trigger
+  const heroBg = document.querySelector('.hero-bg') as HTMLElement;
+  if (heroBg) setTimeout(() => heroBg.classList.add('loaded'), 100);
+
+  // Scroll reveals
+  const obs = new IntersectionObserver(
+    entries => entries.forEach(e => { if (e.isIntersecting) (e.target as HTMLElement).classList.add('visible'); }),
+    { threshold: 0.08, rootMargin: '0px 0px -30px 0px' }
+  );
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>

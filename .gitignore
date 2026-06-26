@@ -1,0 +1,9 @@
+.astro/
+dist/
+node_modules/
+.venv/
+.DS_Store
+.env
+.env.*
+scrape-results/
+__pycache__/

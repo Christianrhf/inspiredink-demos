@@ -1,0 +1,1706 @@
+---
+import { areas, business, gallery, heroImage, logo, ownerGraphic, reviews, services } from "./data";
+
+type Props = {
+  serviceSlug?: string;
+};
+
+const { serviceSlug } = Astro.props as Props;
+const activeService = services.find((service) => service.slug === serviceSlug);
+const isServicePage = Boolean(activeService);
+const pageTitle = activeService
+  ? `${activeService.titleEn} | ${business.shortName}`
+  : `${business.shortName} | Pressure Washing & Soft Washing in Shelton, CT`;
+const pageDescription = activeService
+  ? `${activeService.shortEn} Call ${business.phone.display} for exterior cleaning in Shelton, Fairfield County and New Haven County.`
+  : `Residential pressure washing, soft washing, roof washing, house washing and exterior cleaning by ${business.name}. Licensed and insured in Shelton, CT.`;
+const canonicalPath = activeService ? `/exteriorwash/${activeService.slug}` : "/exteriorwash";
+const heroTitleEn = activeService ? activeService.titleEn : "Exterior washing for homes that need to look sharp again";
+const heroTitleEs = activeService ? activeService.titleEs : "Limpieza exterior para casas que deben verse impecables otra vez";
+const heroLeadEn = activeService
+  ? activeService.detailEn
+  : "Owner-operated pressure washing, soft washing, roof washing and surface cleaning across Shelton, Fairfield County and New Haven County.";
+const heroLeadEs = activeService
+  ? activeService.detailEs
+  : "Lavado a presion, soft washing, lavado de techos y limpieza de superficies atendido por el dueno en Shelton, Fairfield County y New Haven County.";
+const heroPhoto = activeService?.image || heroImage;
+const heroAltEn = activeService?.altEn || "Clean residential home after exterior washing by Bert Falsetti";
+const heroAltEs = activeService?.altEs || "Casa residencial limpia despues de limpieza exterior por Bert Falsetti";
+const featuredReviews = reviews.slice(0, 3);
+const processSteps = [
+  {
+    num: "01",
+    en: "Call or text",
+    es: "Llama o textea",
+    descEn: "Send the address, service needed and a quick description of the problem area.",
+    descEs: "Envia la direccion, el servicio que necesitas y una descripcion rapida del area.",
+  },
+  {
+    num: "02",
+    en: "Review the scope",
+    es: "Revisar el trabajo",
+    descEn: "Bert confirms the surface, access, timing and the right cleaning method.",
+    descEs: "Bert confirma la superficie, acceso, horario y el metodo correcto de limpieza.",
+  },
+  {
+    num: "03",
+    en: "Clean finish",
+    es: "Resultado limpio",
+    descEn: "The work is completed with careful rinsing, clean edges and visible results.",
+    descEs: "El trabajo se completa con enjuague cuidadoso, bordes limpios y resultado visible.",
+  },
+];
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "HomeAndConstructionBusiness",
+  name: business.name,
+  image: heroImage,
+  telephone: business.phone.display,
+  email: business.email,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "56 Woodfield Dr",
+    addressLocality: "Shelton",
+    addressRegion: "CT",
+    postalCode: "06484",
+    addressCountry: "US",
+  },
+  areaServed: areas,
+  priceRange: "$$",
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: business.rating,
+    reviewCount: business.reviewCount,
+  },
+  url: canonicalPath,
+};
+const serviceSchema = activeService
+  ? {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      name: activeService.en,
+      provider: {
+        "@type": "LocalBusiness",
+        name: business.name,
+        telephone: business.phone.display,
+        address: business.address,
+      },
+      areaServed: areas,
+      serviceType: activeService.en,
+    }
+  : null;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <link rel="canonical" href={canonicalPath} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@88,500;88,700;100,600;100,800&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+    {serviceSchema && <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />}
+  </head>
+
+  <body>
+    <div class="top-strip">
+      <p data-en="Keep your roof, siding and walkways clean. Call or text now." data-es="Mantenga techo, siding y caminos limpios. Llame o envie texto ahora.">
+        Keep your roof, siding and walkways clean. Call or text now.
+      </p>
+      <a href={business.phone.href}>{business.phone.display}</a>
+    </div>
+
+    <header class="site-header" aria-label="Main navigation">
+      <a class="brand" href="/exteriorwash" aria-label={`${business.shortName} home`}>
+        <img src={logo} alt={`${business.shortName} logo`} />
+      </a>
+      <nav class="nav-links" aria-label="Page sections">
+        <a href={isServicePage ? "/exteriorwash#services" : "#services"} data-en="All Services" data-es="Servicios">All Services</a>
+        <a href={isServicePage ? "/exteriorwash#work" : "#work"} data-en="Work" data-es="Trabajos">Work</a>
+        <a href={isServicePage ? "/exteriorwash#reviews" : "#reviews"} data-en="Reviews" data-es="Resenas">Reviews</a>
+        <a href={isServicePage ? "/exteriorwash#areas" : "#areas"} data-en="Areas" data-es="Areas">Areas</a>
+        <a href={isServicePage ? "/exteriorwash#estimate" : "#estimate"} data-en="Contact" data-es="Contacto">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="lang-toggle" type="button" data-lang-toggle aria-label="Switch language">ES</button>
+        <a class="nav-call" href={business.phone.href}>
+          <span data-en="Call us" data-es="Llamar">Call us</span>
+          <strong>{business.phone.display}</strong>
+        </a>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <img class="hero-bg" src={heroPhoto} alt={heroAltEn} data-alt-en={heroAltEn} data-alt-es={heroAltEs} fetchpriority="high" />
+        <div class="hero-overlay"></div>
+        <div class="container hero-inner">
+          <div class="hero-copy reveal">
+            <p class="eyebrow" data-en={`${business.license} / Since ${business.founded}`} data-es={`${business.license} / Desde ${business.founded}`}>
+              {business.license} / Since {business.founded}
+            </p>
+            <h1 data-en={heroTitleEn} data-es={heroTitleEs}>{heroTitleEn}</h1>
+            <p class="hero-lead" data-en={heroLeadEn} data-es={heroLeadEs}>{heroLeadEn}</p>
+            <div class="hero-actions">
+              <a class="btn btn-red" href={business.phone.href}>
+                <span data-en="Call Bert" data-es="Llamar a Bert">Call Bert</span>
+                <strong>{business.phone.display}</strong>
+              </a>
+              <a class="btn btn-dark" href="#services" data-en="See all services" data-es="Ver servicios">See all services</a>
+            </div>
+          </div>
+
+          <aside class="rating-card reveal" aria-label="Google rating">
+            <div class="avatar-stack" aria-hidden="true">
+              <span>D</span>
+              <span>L</span>
+              <span>M</span>
+            </div>
+            <div class="rating-content">
+              <div class="google-rating-head">
+                <span class="google-mark" aria-hidden="true">G</span>
+                <p class="rating-line">
+                  <strong>{business.rating}</strong>
+                  <span data-en="Google rating" data-es="Rating en Google">Google rating</span>
+                </p>
+              </div>
+              <div class="rating-stars" aria-label="5 star Google rating">&starf;&starf;&starf;&starf;&starf;</div>
+              <p class="rating-meta" data-en={`${business.reviewCount} reviews / owner-operated`} data-es={`${business.reviewCount} resenas / atendido por el dueno`}>
+                {business.reviewCount} reviews / owner-operated
+              </p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="summary-band">
+        <div class="container summary-grid">
+          <div class="summary-stat reveal">
+            <strong>24+</strong>
+            <span data-en="Years cleaning Connecticut homes" data-es="Anos limpiando casas en Connecticut">Years cleaning Connecticut homes</span>
+          </div>
+          <blockquote class="summary-quote reveal">
+            <div class="summary-review-head">
+              <span class="google-mark google-mark-small" aria-hidden="true">G</span>
+              <div>
+                <div class="stars" aria-label="5 star Google review">&starf;&starf;&starf;&starf;&starf;</div>
+                <span data-en="5.0 Google review" data-es="Resena Google 5.0">5.0 Google review</span>
+              </div>
+            </div>
+            <p data-en={`"${reviews[0].quoteEn}"`} data-es={`"${reviews[0].quoteEs}"`}>"{reviews[0].quoteEn}"</p>
+            <cite>{reviews[0].name}</cite>
+          </blockquote>
+        </div>
+      </section>
+
+      {isServicePage && activeService && (
+        <section class="service-focus">
+          <div class="container focus-grid">
+            <div class="section-title reveal">
+              <p class="section-kicker" data-en="Selected service" data-es="Servicio seleccionado">Selected service</p>
+              <h2 data-en={`${activeService.en}, with the right method for the surface.`} data-es={`${activeService.es}, con el metodo correcto para la superficie.`}>
+                {activeService.en}, with the right method for the surface.
+              </h2>
+            </div>
+            <div class="focus-panel reveal">
+              <p data-en={activeService.detailEn} data-es={activeService.detailEs}>{activeService.detailEn}</p>
+              <a class="text-link" href={business.phone.href}>
+                <span data-en="Call for this service" data-es="Llamar por este servicio">Call for this service</span>
+                <strong>{business.phone.display}</strong>
+              </a>
+            </div>
+          </div>
+        </section>
+      )}
+
+      <section class="section services-section" id="services">
+        <div class="container services-layout">
+          <div class="section-title reveal">
+            <p class="section-kicker" data-en="Our services" data-es="Nuestros servicios">Our services</p>
+            <h2 data-en="Exterior cleaning without the guesswork." data-es="Limpieza exterior sin complicaciones.">
+              Exterior cleaning without the guesswork.
+            </h2>
+            <p data-en="Bert matches the cleaning method to the surface: pressure where it belongs, soft washing where the home needs protection." data-es="Bert adapta el metodo a la superficie: presion donde corresponde, soft washing donde la casa necesita proteccion.">
+              Bert matches the cleaning method to the surface: pressure where it belongs, soft washing where the home needs protection.
+            </p>
+          </div>
+
+          <div class="service-list">
+            {services.map((service) => (
+              <article class={`service-row reveal ${service.slug === activeService?.slug ? "is-active" : ""}`}>
+                <a href={`/exteriorwash/${service.slug}`}>
+                  <div class="service-copy">
+                    <span class="service-tag">{service.num} / {service.en.includes("Window") ? "Home Improvement" : "Exterior Cleaning"}</span>
+                    <h3 data-en={service.en} data-es={service.es}>{service.en}</h3>
+                    <p data-en={service.shortEn} data-es={service.shortEs}>{service.shortEn}</p>
+                  </div>
+                  <img src={service.image} alt={service.altEn} loading="lazy" data-alt-en={service.altEn} data-alt-es={service.altEs} />
+                </a>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="section results-section" id="work">
+        <div class="container">
+          <div class="section-title split-title reveal">
+            <div>
+              <p class="section-kicker" data-en="Results that speak" data-es="Resultados que hablan">Results that speak</p>
+              <h2 data-en="Real before-and-after work from nearby homes." data-es="Antes y despues reales en casas cercanas.">
+                Real before-and-after work from nearby homes.
+              </h2>
+            </div>
+            <a class="small-red" href={business.phone.href} data-en="Book a wash" data-es="Reservar lavado">Book a wash</a>
+          </div>
+
+          <figure class="before-after reveal">
+            <img src="/images/exteriorwash/24-before-and-after-house-wash-fairfield-ct.webp" alt="Before and after house wash in Fairfield CT" loading="lazy" />
+            <span class="before-label">Before</span>
+            <span class="after-label">After</span>
+            <span class="divider" aria-hidden="true"></span>
+          </figure>
+
+          <div class="gallery-strip" aria-label="Exterior cleaning gallery">
+            {gallery.map((item) => (
+              <figure class="gallery-card reveal">
+                <img src={item.src} alt={item.altEn} loading="lazy" data-alt-en={item.altEn} data-alt-es={item.altEs} />
+                <figcaption data-en={item.labelEn} data-es={item.labelEs}>{item.labelEn}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="section process-section">
+        <div class="container">
+          <div class="section-title centered reveal">
+            <p class="section-kicker" data-en="Simple service process" data-es="Proceso sencillo">Simple service process</p>
+            <h2 data-en="Fast to book. Careful on the surface." data-es="Rapido para reservar. Cuidadoso con la superficie.">
+              Fast to book. Careful on the surface.
+            </h2>
+          </div>
+          <ol class="process-grid">
+            {processSteps.map((step) => (
+              <li class="process-card reveal">
+                <span>{step.num}</span>
+                <h3 data-en={step.en} data-es={step.es}>{step.en}</h3>
+                <p data-en={step.descEn} data-es={step.descEs}>{step.descEn}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section class="section reviews-section" id="reviews">
+        <div class="container">
+          <div class="section-title reveal">
+            <p class="section-kicker" data-en="Recommended locally" data-es="Recomendado localmente">Recommended locally</p>
+            <h2 data-en="Homeowners call out the same strengths." data-es="Los clientes resaltan las mismas fortalezas.">
+              Homeowners call out the same strengths.
+            </h2>
+          </div>
+          <div class="review-grid">
+            {featuredReviews.map((review) => (
+              <article class="review-card reveal">
+                <div class="review-top">
+                  <img src={review.photo} alt={`${review.name} Google reviewer`} loading="lazy" />
+                  <div>
+                    <div class="review-stars" aria-label="5 star Google review">&starf;&starf;&starf;&starf;&starf;</div>
+                    <strong>{review.name}</strong>
+                  </div>
+                </div>
+                <p data-en={review.quoteEn} data-es={review.quoteEs}>{review.quoteEn}</p>
+                <footer>
+                  <span data-en="Google review" data-es="Resena de Google">Google review</span>
+                  <span>{review.date}</span>
+                </footer>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="section owner-section">
+        <div class="container owner-grid">
+          <figure class="owner-image reveal">
+            <img src="/images/exteriorwash/19-blue-stone-walkway-surface-cleaning-trumbull-connectic.webp" alt="Bluestone walkway cleaned by Bert Falsetti" loading="lazy" />
+          </figure>
+          <div class="owner-copy reveal">
+            <p class="section-kicker" data-en="Owner-operated" data-es="Atendido por el dueno">Owner-operated</p>
+            <h2 data-en="You call Bert. Bert does the work." data-es="Llamas a Bert. Bert hace el trabajo.">
+              You call Bert. Bert does the work.
+            </h2>
+            <p data-en="No anonymous crew handoff. Homeowners mention responsiveness, fair pricing, clean results and clear communication because the same person owns the promise and the finish." data-es="Sin pasar de mano en mano. Los clientes mencionan respuesta rapida, precio justo, resultados limpios y comunicacion clara porque la misma persona responde por la promesa y el acabado.">
+              No anonymous crew handoff. Homeowners mention responsiveness, fair pricing, clean results and clear communication because the same person owns the promise and the finish.
+            </p>
+            <div class="owner-points">
+              <span data-en="Licensed & insured" data-es="Licencia y seguro">Licensed & insured</span>
+              <span data-en="Fairfield County" data-es="Fairfield County">Fairfield County</span>
+              <span data-en="New Haven County" data-es="New Haven County">New Haven County</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section areas-section" id="areas">
+        <div class="container areas-layout">
+          <div class="section-title reveal">
+            <p class="section-kicker" data-en="Service area" data-es="Area de servicio">Service area</p>
+            <h2 data-en="Focused on Shelton and nearby Connecticut towns." data-es="Enfocado en Shelton y ciudades cercanas de Connecticut.">
+              Focused on Shelton and nearby Connecticut towns.
+            </h2>
+          </div>
+          <div class="area-list reveal">
+            <div class="area-note">
+              <strong data-en="Primary coverage" data-es="Cobertura principal">Primary coverage</strong>
+              <p data-en="Built around Shelton with regular work across Fairfield County and New Haven County." data-es="Enfocado en Shelton con trabajos frecuentes en Fairfield County y New Haven County.">
+                Built around Shelton with regular work across Fairfield County and New Haven County.
+              </p>
+            </div>
+            <div class="area-chips">
+              {areas.map((area) => <span>{area}</span>)}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section estimate-section" id="estimate">
+        <div class="container estimate-layout">
+          <div class="section-title reveal">
+            <p class="section-kicker" data-en="Stress-free service" data-es="Servicio sin estres">Stress-free service</p>
+            <h2 data-en="Call first for the fastest response." data-es="Llama primero para la respuesta mas rapida.">
+              Call first for the fastest response.
+            </h2>
+            <p data-en="Prefer to send details? The form prepares a text message with your name, town, service and notes." data-es="Prefieres enviar detalles? El formulario prepara un texto con tu nombre, ciudad, servicio y notas.">
+              Prefer to send details? The form prepares a text message with your name, town, service and notes.
+            </p>
+            <a class="btn btn-red large-call" href={business.phone.href}>
+              <span data-en="Call now" data-es="Llamar ahora">Call now</span>
+              <strong>{business.phone.display}</strong>
+            </a>
+          </div>
+
+          <form class="estimate-form reveal" data-estimate-form>
+            <label>
+              <span data-en="Name" data-es="Nombre">Name</span>
+              <input name="name" autocomplete="name" required />
+            </label>
+            <label>
+              <span data-en="Phone" data-es="Telefono">Phone</span>
+              <input name="phone" autocomplete="tel" required />
+            </label>
+            <label>
+              <span data-en="Town" data-es="Ciudad">Town</span>
+              <input name="town" autocomplete="address-level2" />
+            </label>
+            <label>
+              <span data-en="Service" data-es="Servicio">Service</span>
+              <select name="service">
+                {services.map((service) => <option value={service.en}>{service.en}</option>)}
+              </select>
+            </label>
+            <label class="full">
+              <span data-en="What needs cleaning?" data-es="Que necesita limpieza?">What needs cleaning?</span>
+              <textarea name="message" rows="4"></textarea>
+            </label>
+            <button class="form-submit" type="submit" data-en="Send as text message" data-es="Enviar como texto">Send as text message</button>
+          </form>
+        </div>
+      </section>
+
+      <section class="image-rail" aria-label="Exterior cleaning photos">
+        {[gallery[3], gallery[4], gallery[0], gallery[2], gallery[5], gallery[1]].map((item) => (
+          <img src={item.src} alt={item.altEn} loading="lazy" />
+        ))}
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-grid">
+        <div class="footer-brand">
+          <img src={logo} alt={`${business.shortName} logo`} loading="lazy" />
+          <p data-en="Residential exterior cleaning with owner-operated accountability." data-es="Limpieza exterior residencial con responsabilidad directa del dueno.">
+            Residential exterior cleaning with owner-operated accountability.
+          </p>
+        </div>
+        <div>
+          <h3 data-en="Navigation" data-es="Navegacion">Navigation</h3>
+          <a href="/exteriorwash#services" data-en="Services" data-es="Servicios">Services</a>
+          <a href="/exteriorwash#work" data-en="Work" data-es="Trabajos">Work</a>
+          <a href="/exteriorwash#reviews" data-en="Reviews" data-es="Resenas">Reviews</a>
+          <a href="/exteriorwash#estimate" data-en="Contact" data-es="Contacto">Contact</a>
+        </div>
+        <div>
+          <h3 data-en="Contact" data-es="Contacto">Contact</h3>
+          <a href={business.phone.href}>{business.phone.display}</a>
+          <a href={business.emailHref}>{business.email}</a>
+          <a href={business.mapsHref} target="_blank" rel="noreferrer">{business.address}</a>
+        </div>
+        <div>
+          <h3 data-en="Proof" data-es="Prueba">Proof</h3>
+          <span>{business.rating} rating / {business.reviewCount} Google reviews</span>
+          <span>{business.license}</span>
+          <img class="footer-mark" src={ownerGraphic} alt={`${business.shortName} service graphic`} loading="lazy" />
+        </div>
+      </div>
+    </footer>
+
+    <div class="sticky-actions" aria-label="Quick contact">
+      <a class="sticky-call" href={business.phone.href}>
+        <span data-en="Call" data-es="Llamar">Call</span>
+        <strong>{business.phone.display}</strong>
+      </a>
+      <a class="sticky-text" href={business.phone.sms} data-en="Text" data-es="Texto">Text</a>
+    </div>
+
+    <script>
+      const root = document.documentElement;
+      const langButton = document.querySelector("[data-lang-toggle]");
+      const translatable = [...document.querySelectorAll("[data-en][data-es]")];
+      const translatedImages = [...document.querySelectorAll("img[data-alt-en][data-alt-es]")];
+      const form = document.querySelector("[data-estimate-form]");
+      const stickyActions = document.querySelector(".sticky-actions");
+      let lang = "en";
+
+      function setLang(nextLang) {
+        lang = nextLang;
+        root.lang = lang;
+        translatable.forEach((node) => {
+          node.textContent = node.getAttribute(`data-${lang}`) || "";
+        });
+        translatedImages.forEach((img) => {
+          img.setAttribute("alt", img.getAttribute(`data-alt-${lang}`) || "");
+        });
+        if (langButton) langButton.textContent = lang === "en" ? "ES" : "EN";
+      }
+
+      function updateStickyActions() {
+        stickyActions?.classList.toggle("is-visible", window.scrollY > 520);
+      }
+
+      langButton?.addEventListener("click", () => setLang(lang === "en" ? "es" : "en"));
+      window.addEventListener("scroll", updateStickyActions, { passive: true });
+      updateStickyActions();
+
+      const observer = new IntersectionObserver(
+        (entries) => entries.forEach((entry) => entry.isIntersecting && entry.target.classList.add("is-visible")),
+        { threshold: 0.14 }
+      );
+      document.querySelectorAll(".reveal").forEach((node) => observer.observe(node));
+
+      form?.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const data = new FormData(form);
+        const lines = [
+          "Estimate request for Bert Falsetti's",
+          `Name: ${data.get("name") || ""}`,
+          `Phone: ${data.get("phone") || ""}`,
+          `Town: ${data.get("town") || ""}`,
+          `Service: ${data.get("service") || ""}`,
+          `Details: ${data.get("message") || ""}`,
+        ];
+        window.location.href = `sms:+12032585177?&body=${encodeURIComponent(lines.join("\n"))}`;
+      });
+    </script>
+
+    <style is:global>
+      :root {
+        --color-principal: #0A39A6;
+        --color-acento: #4A90E2;
+        --color-texto: #071F57;
+        --color-fondo-suave: #F4F7FC;
+        --color-blanco: #FFFFFF;
+        --color-estrellas: #F5B301;
+        --red: var(--color-principal);
+        --red-dark: var(--color-texto);
+        --ink: var(--color-texto);
+        --charcoal: var(--color-texto);
+        --muted: rgba(7, 31, 87, 0.68);
+        --line: rgba(10, 57, 166, 0.16);
+        --paper: var(--color-fondo-suave);
+        --white: var(--color-blanco);
+        --blue: var(--color-acento);
+        --shadow: 0 24px 70px rgba(7, 31, 87, 0.16);
+        --font-display: "Archivo", "Arial Narrow", sans-serif;
+        --font-body: "Manrope", system-ui, sans-serif;
+        --container-max: 1180px;
+        --page-gutter: max(1rem, calc((100vw - var(--container-max)) / 2));
+        --strip-h: 28px;
+        --nav-h: 72px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--paper);
+        font-family: var(--font-body);
+        line-height: 1.55;
+        padding-bottom: 76px;
+        overflow-x: clip;
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+      }
+
+      h1,
+      h2,
+      h3,
+      p,
+      blockquote,
+      figure {
+        margin: 0;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: var(--font-display);
+        font-stretch: 88%;
+        letter-spacing: 0;
+        line-height: 0.98;
+      }
+
+      h1 {
+        max-width: 780px;
+        color: var(--white);
+        font-size: clamp(3.4rem, 7.8vw, 7.3rem);
+        font-weight: 800;
+      }
+
+      h2 {
+        max-width: 780px;
+        font-size: clamp(2.2rem, 4.6vw, 4.8rem);
+        font-weight: 800;
+      }
+
+      h3 {
+        font-size: 1.35rem;
+        font-weight: 800;
+      }
+
+      .container {
+        width: min(100% - 2rem, var(--container-max));
+        margin-inline: auto;
+      }
+
+      .section {
+        padding-block: clamp(4.8rem, 8vw, 8rem);
+      }
+
+      .top-strip {
+        position: fixed;
+        inset: 0 0 auto;
+        z-index: 60;
+        height: var(--strip-h);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1.4rem;
+        color: var(--white);
+        background: var(--red);
+        font-size: 0.72rem;
+        font-weight: 800;
+      }
+
+      .top-strip a {
+        font-weight: 900;
+      }
+
+      .site-header {
+        position: fixed;
+        inset: var(--strip-h) 0 auto;
+        z-index: 55;
+        height: var(--nav-h);
+        display: grid;
+        grid-template-columns: 190px 1fr auto;
+        align-items: center;
+        gap: 1rem;
+        padding-inline: var(--page-gutter);
+        background: rgba(255, 255, 255, 0.94);
+        border-bottom: 1px solid rgba(10, 57, 166, 0.12);
+        backdrop-filter: blur(16px);
+      }
+
+      .brand img {
+        width: 154px;
+      }
+
+      .nav-links {
+        display: flex;
+        justify-content: center;
+        gap: clamp(1rem, 2.4vw, 2rem);
+      }
+
+      .nav-links a,
+      .nav-call,
+      .lang-toggle,
+      .btn,
+      .small-red,
+      .form-submit,
+      .sticky-actions a {
+        font-size: 0.76rem;
+        font-weight: 900;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+
+      .nav-links a {
+        color: var(--ink);
+      }
+
+      .nav-links a:hover {
+        color: var(--red);
+      }
+
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+      }
+
+      .lang-toggle {
+        min-width: 46px;
+        min-height: 42px;
+        border: 1px solid var(--line);
+        border-radius: 2px;
+        background: var(--white);
+        cursor: pointer;
+      }
+
+      .nav-call {
+        min-height: 42px;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.7rem;
+        color: var(--white);
+        background: var(--red);
+        padding: 0 1.05rem;
+      }
+
+      .hero {
+        position: relative;
+        min-height: 820px;
+        display: grid;
+        align-items: end;
+        overflow: hidden;
+        background: var(--charcoal);
+      }
+
+      .hero-bg,
+      .hero-overlay {
+        position: absolute;
+        inset: 0;
+      }
+
+      .hero-bg {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .hero-overlay {
+        background:
+          linear-gradient(90deg, rgba(7, 31, 87, 0.88), rgba(7, 31, 87, 0.6) 45%, rgba(7, 31, 87, 0.18)),
+          linear-gradient(0deg, rgba(7, 31, 87, 0.68), transparent 48%);
+      }
+
+      .hero-inner {
+        position: relative;
+        z-index: 2;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 330px;
+        gap: clamp(2rem, 6vw, 6rem);
+        align-items: end;
+        padding-top: calc(var(--strip-h) + var(--nav-h) + 5rem);
+        padding-bottom: 4.2rem;
+      }
+
+      .eyebrow,
+      .section-kicker,
+      .service-tag {
+        color: var(--red);
+        font-size: 0.76rem;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .eyebrow {
+        margin-bottom: 1rem;
+      }
+
+      .hero .eyebrow {
+        color: var(--color-acento);
+        text-shadow: 0 1px 12px rgba(7, 31, 87, 0.45);
+      }
+
+      .hero-lead {
+        max-width: 650px;
+        margin-top: 1.15rem;
+        color: rgba(255, 255, 255, 0.82);
+        font-size: clamp(1rem, 1.7vw, 1.22rem);
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-top: 2rem;
+      }
+
+      .btn,
+      .small-red {
+        min-height: 52px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.8rem;
+        padding: 0.82rem 1.1rem;
+        border: 1px solid transparent;
+      }
+
+      .btn-red,
+      .small-red,
+      .form-submit,
+      .sticky-call {
+        color: var(--white);
+        background: var(--red);
+      }
+
+      .btn-dark {
+        color: var(--white);
+        background: rgba(7, 31, 87, 0.58);
+        border-color: rgba(255, 255, 255, 0.42);
+      }
+
+      .rating-card {
+        display: grid;
+        gap: 1rem;
+        color: var(--white);
+        background: rgba(7, 31, 87, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 1.2rem;
+        backdrop-filter: blur(10px);
+      }
+
+      .avatar-stack {
+        display: flex;
+      }
+
+      .avatar-stack span {
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        margin-right: -10px;
+        color: var(--white);
+        background: var(--blue);
+        border: 2px solid var(--white);
+        border-radius: 50%;
+        font-weight: 900;
+      }
+
+      .rating-line {
+        display: flex;
+        align-items: baseline;
+        gap: 0.55rem;
+      }
+
+      .google-rating-head {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .google-mark {
+        width: 36px;
+        height: 36px;
+        display: grid;
+        place-items: center;
+        flex: 0 0 36px;
+        color: var(--color-principal);
+        background: var(--color-blanco);
+        border: 2px solid rgba(255, 255, 255, 0.78);
+        border-radius: 50%;
+        font-family: var(--font-body);
+        font-size: 1.1rem;
+        font-weight: 900;
+        box-shadow: 0 8px 18px rgba(7, 31, 87, 0.22);
+      }
+
+      .google-mark-small {
+        width: 30px;
+        height: 30px;
+        flex-basis: 30px;
+        font-size: 0.95rem;
+        border-color: var(--line);
+      }
+
+      .rating-line strong {
+        color: var(--white);
+        font-family: var(--font-display);
+        font-size: 2rem;
+        font-weight: 800;
+      }
+
+      .rating-stars,
+      .stars,
+      .review-stars {
+        color: var(--color-estrellas);
+        font-weight: 900;
+        letter-spacing: 0.1em;
+        text-shadow: 0 0 16px rgba(245, 179, 1, 0.28);
+      }
+
+      .rating-stars {
+        margin-top: 0.7rem;
+        font-size: 1rem;
+      }
+
+      .rating-card .rating-meta,
+      .rating-line span {
+        color: rgba(255, 255, 255, 0.72);
+        font-size: 0.86rem;
+      }
+
+      .rating-meta {
+        margin-top: 0.4rem;
+      }
+
+      .summary-band {
+        background: var(--paper);
+        border-bottom: 1px solid var(--line);
+        padding-block: 3rem;
+      }
+
+      .summary-grid {
+        display: grid;
+        grid-template-columns: 0.9fr 1.2fr;
+        gap: clamp(2rem, 7vw, 7rem);
+        align-items: center;
+      }
+
+      .summary-stat strong {
+        display: block;
+        font-family: var(--font-display);
+        font-size: clamp(3rem, 7vw, 6rem);
+        line-height: 0.9;
+      }
+
+      .summary-stat span {
+        display: block;
+        max-width: 300px;
+        margin-top: 0.45rem;
+        color: var(--muted);
+        font-weight: 800;
+      }
+
+      .summary-quote {
+        color: var(--ink);
+      }
+
+      .summary-review-head {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.9rem;
+      }
+
+      .summary-review-head .stars {
+        line-height: 1;
+        margin-bottom: 0.25rem;
+      }
+
+      .summary-review-head span:not(.google-mark) {
+        color: var(--muted);
+        font-size: 0.78rem;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .summary-quote p {
+        max-width: 620px;
+        font-weight: 800;
+      }
+
+      .summary-quote cite {
+        display: block;
+        margin-top: 0.85rem;
+        color: var(--muted);
+        font-style: normal;
+        font-size: 0.88rem;
+      }
+
+      .service-focus {
+        padding-block: 4.5rem;
+        background: var(--white);
+      }
+
+      .focus-grid,
+      .services-layout,
+      .owner-grid,
+      .areas-layout,
+      .estimate-layout {
+        display: grid;
+        grid-template-columns: 0.86fr 1.14fr;
+        gap: clamp(2rem, 6vw, 6rem);
+        align-items: start;
+      }
+
+      .section-title p:not(.section-kicker) {
+        max-width: 520px;
+        margin-top: 1rem;
+        color: var(--muted);
+      }
+
+      .focus-panel {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        padding: 1.5rem;
+      }
+
+      .text-link {
+        display: inline-flex;
+        gap: 0.7rem;
+        margin-top: 1.2rem;
+        color: var(--red);
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .services-section,
+      .process-section,
+      .owner-section {
+        background: var(--white);
+      }
+
+      .services-section .section-title {
+        position: sticky;
+        top: calc(var(--strip-h) + var(--nav-h) + 2rem);
+        align-self: start;
+      }
+
+      .services-section .section-title::after {
+        content: "";
+        display: block;
+        width: min(100%, 360px);
+        height: 3px;
+        margin-top: 2rem;
+        background: linear-gradient(90deg, var(--color-principal), var(--color-acento), transparent);
+      }
+
+      .service-list {
+        display: grid;
+        gap: 1.2rem;
+      }
+
+      .service-row {
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 1.2rem;
+      }
+
+      .service-row a {
+        display: grid;
+        grid-template-columns: 1fr 190px;
+        gap: 1.2rem;
+        align-items: center;
+      }
+
+      .service-row.is-active {
+        border-color: var(--red);
+      }
+
+      .service-row h3 {
+        margin-top: 0.38rem;
+      }
+
+      .service-row p {
+        max-width: 520px;
+        margin-top: 0.45rem;
+        color: var(--muted);
+        font-size: 0.93rem;
+      }
+
+      .service-row img {
+        width: 190px;
+        aspect-ratio: 1.7;
+        object-fit: cover;
+      }
+
+      .results-section {
+        background: var(--paper);
+      }
+
+      .split-title {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 2rem;
+        margin-bottom: 2.4rem;
+      }
+
+      .before-after {
+        position: relative;
+        overflow: hidden;
+        background: var(--line);
+      }
+
+      .before-after img {
+        width: 100%;
+        aspect-ratio: 2.05;
+        object-fit: cover;
+      }
+
+      .before-label,
+      .after-label {
+        position: absolute;
+        top: 1rem;
+        color: var(--white);
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .before-label {
+        left: 1rem;
+      }
+
+      .after-label {
+        right: 1rem;
+      }
+
+      .divider {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        width: 3px;
+        background: var(--white);
+      }
+
+      .divider::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: var(--white);
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.22);
+      }
+
+      .gallery-strip {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 0.75rem;
+        margin-top: 1.4rem;
+      }
+
+      .gallery-card {
+        position: relative;
+        overflow: hidden;
+        min-height: 180px;
+        background: var(--line);
+      }
+
+      .gallery-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .gallery-card figcaption {
+        position: absolute;
+        left: 0.55rem;
+        right: 0.55rem;
+        bottom: 0.55rem;
+        color: var(--white);
+        background: rgba(7, 31, 87, 0.78);
+        padding: 0.35rem 0.45rem;
+        font-size: 0.68rem;
+        font-weight: 900;
+      }
+
+      .centered {
+        text-align: center;
+        margin-inline: auto;
+      }
+
+      .centered h2,
+      .centered p {
+        margin-inline: auto;
+      }
+
+      .process-grid {
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        margin: 2.8rem 0 0;
+        padding: 0;
+      }
+
+      .process-card {
+        min-height: 240px;
+        background: var(--white);
+        border: 1px solid var(--line);
+        padding: 1.35rem;
+      }
+
+      .process-card span {
+        color: var(--red);
+        font-weight: 900;
+      }
+
+      .process-card h3 {
+        margin-top: 2rem;
+      }
+
+      .process-card p {
+        margin-top: 0.65rem;
+        color: var(--muted);
+      }
+
+      .reviews-section {
+        background: var(--paper);
+      }
+
+      .areas-section {
+        position: relative;
+        overflow: hidden;
+        color: var(--white);
+        background:
+          linear-gradient(135deg, rgba(7, 31, 87, 0.96), rgba(10, 57, 166, 0.9)),
+          url("/images/exteriorwash/20-exterior-cleaning-shelton-connecticut.webp") center/cover;
+        padding-block: clamp(3.4rem, 6vw, 5.2rem);
+      }
+
+      .areas-section::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+        background-size: 54px 54px;
+        opacity: 0.28;
+        pointer-events: none;
+      }
+
+      .areas-layout {
+        position: relative;
+        z-index: 1;
+        align-items: center;
+        gap: clamp(1.5rem, 4vw, 4rem);
+        padding-block: 1rem;
+      }
+
+      .areas-section h2 {
+        color: var(--white);
+      }
+
+      .areas-section .section-kicker {
+        color: var(--color-acento);
+      }
+
+      .review-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: clamp(1.2rem, 4vw, 3rem);
+        margin-top: 2.6rem;
+      }
+
+      .review-card {
+        min-height: 260px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background: var(--white);
+        border: 1px solid var(--line);
+        padding: 1.25rem;
+        box-shadow: 0 18px 45px rgba(7, 31, 87, 0.08);
+      }
+
+      .review-top {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        margin-bottom: 1.15rem;
+      }
+
+      .review-top img {
+        width: 52px;
+        height: 52px;
+        flex: 0 0 52px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid var(--white);
+        box-shadow: 0 0 0 1px var(--line), 0 8px 18px rgba(7, 31, 87, 0.12);
+      }
+
+      .review-top strong {
+        display: block;
+        color: var(--ink);
+        line-height: 1.1;
+      }
+
+      .review-stars {
+        font-size: 1rem;
+        line-height: 1;
+        margin-bottom: 0.35rem;
+      }
+
+      .review-card p {
+        color: var(--ink);
+        font-weight: 700;
+      }
+
+      .review-card footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-top: 1.4rem;
+        color: var(--muted);
+        font-size: 0.86rem;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      .review-card footer strong {
+        color: var(--ink);
+      }
+
+      .owner-grid {
+        align-items: center;
+      }
+
+      .owner-image img {
+        width: 100%;
+        aspect-ratio: 1.35;
+        object-fit: cover;
+      }
+
+      .owner-copy p:not(.section-kicker) {
+        max-width: 560px;
+        margin-top: 1rem;
+        color: var(--muted);
+      }
+
+      .owner-points {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.7rem;
+        margin-top: 2rem;
+      }
+
+      .owner-points span {
+        border-top: 1px solid var(--line);
+        padding-top: 0.8rem;
+        font-size: 0.82rem;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .area-list {
+        display: grid;
+        gap: 1rem;
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.24);
+        padding: 1.15rem;
+        backdrop-filter: blur(14px);
+        box-shadow: 0 18px 45px rgba(7, 31, 87, 0.22);
+      }
+
+      .area-note {
+        display: grid;
+        grid-template-columns: 170px 1fr;
+        gap: 1rem;
+        align-items: start;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+        padding-bottom: 1rem;
+      }
+
+      .area-note strong {
+        color: var(--color-acento);
+        font-size: 0.78rem;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .area-note p {
+        color: rgba(255, 255, 255, 0.78);
+      }
+
+      .area-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.7rem;
+      }
+
+      .area-chips span {
+        color: var(--white);
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.24);
+        padding: 0.78rem 0.95rem;
+        font-weight: 900;
+      }
+
+      .estimate-section {
+        background: var(--white);
+      }
+
+      .large-call {
+        width: fit-content;
+        margin-top: 1.6rem;
+      }
+
+      .estimate-form {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        background: var(--paper);
+        border: 1px solid var(--line);
+        padding: 1.2rem;
+      }
+
+      .estimate-form label {
+        display: grid;
+        gap: 0.4rem;
+      }
+
+      .estimate-form label span {
+        color: var(--muted);
+        font-size: 0.8rem;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .estimate-form input,
+      .estimate-form select,
+      .estimate-form textarea {
+        width: 100%;
+        min-height: 48px;
+        color: var(--ink);
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 0;
+        padding: 0.8rem;
+      }
+
+      .estimate-form textarea {
+        resize: vertical;
+      }
+
+      .full,
+      .form-submit {
+        grid-column: 1 / -1;
+      }
+
+      .form-submit {
+        min-height: 54px;
+        border: 0;
+        cursor: pointer;
+      }
+
+      .image-rail {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(180px, 1fr));
+        gap: 0.5rem;
+        overflow: hidden;
+        background: var(--charcoal);
+        padding: 0.5rem;
+      }
+
+      .image-rail img {
+        width: 100%;
+        aspect-ratio: 1.05;
+        object-fit: cover;
+        border: 6px solid var(--color-blanco);
+        box-shadow: 0 12px 30px rgba(7, 31, 87, 0.22);
+      }
+
+      .footer {
+        color: rgba(255, 255, 255, 0.78);
+        background: var(--charcoal);
+        padding-block: clamp(3rem, 7vw, 6rem);
+      }
+
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 1.5fr repeat(3, 1fr);
+        gap: 2rem;
+      }
+
+      .footer img {
+        width: 170px;
+        background: var(--white);
+        padding: 0.35rem;
+      }
+
+      .footer p {
+        max-width: 320px;
+        margin-top: 1rem;
+      }
+
+      .footer h3 {
+        color: var(--white);
+        font-size: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .footer a,
+      .footer span {
+        display: block;
+        margin-top: 0.55rem;
+      }
+
+      .footer-mark {
+        margin-top: 1.2rem;
+        opacity: 0.78;
+      }
+
+      .sticky-actions {
+        position: fixed;
+        left: 50%;
+        bottom: 0.8rem;
+        z-index: 65;
+        width: min(100% - 1rem, 540px);
+        display: grid;
+        grid-template-columns: 1fr 112px;
+        gap: 0.5rem;
+        opacity: 0;
+        pointer-events: none;
+        transform: translate(-50%, 18px);
+        transition: opacity 0.18s ease, transform 0.18s ease;
+      }
+
+      .sticky-actions.is-visible {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translate(-50%, 0);
+      }
+
+      .sticky-actions a {
+        min-height: 58px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.65rem;
+        box-shadow: 0 18px 46px rgba(7, 31, 87, 0.22);
+      }
+
+      .sticky-text {
+        color: var(--ink);
+        background: var(--white);
+        border: 1px solid var(--line);
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(18px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+
+      .reveal.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+          animation-duration: 0.01ms !important;
+        }
+      }
+
+      @media (max-width: 1040px) {
+        .site-header {
+          grid-template-columns: 170px 1fr auto;
+        }
+
+        .nav-links {
+          gap: 0.8rem;
+        }
+
+        .hero-inner,
+        .summary-grid,
+        .focus-grid,
+        .services-layout,
+        .owner-grid,
+        .areas-layout,
+        .estimate-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .rating-card {
+          max-width: 420px;
+        }
+
+        .gallery-strip {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .footer-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 760px) {
+        :root {
+          --strip-h: 30px;
+          --nav-h: 66px;
+        }
+
+        .top-strip {
+          justify-content: space-between;
+          padding-inline: 0.8rem;
+          font-size: 0.62rem;
+        }
+
+        .top-strip p {
+          max-width: 230px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .site-header {
+          grid-template-columns: 132px 1fr;
+          padding-inline: 0.75rem;
+        }
+
+        .brand img {
+          width: 126px;
+        }
+
+        .nav-links {
+          display: none;
+        }
+
+        .nav-actions {
+          justify-content: end;
+        }
+
+        .nav-call {
+          padding-inline: 0.8rem;
+        }
+
+        .nav-call span {
+          display: none;
+        }
+
+        .hero {
+          min-height: 780px;
+        }
+
+        .hero-inner {
+          padding-top: calc(var(--strip-h) + var(--nav-h) + 4rem);
+          padding-bottom: 2rem;
+        }
+
+        .hero-actions {
+          display: grid;
+        }
+
+        .btn {
+          width: 100%;
+        }
+
+        .service-row a {
+          grid-template-columns: 1fr;
+        }
+
+        .service-row img {
+          width: 100%;
+          aspect-ratio: 1.8;
+        }
+
+        .split-title {
+          display: grid;
+        }
+
+        .before-after img {
+          aspect-ratio: 1.12;
+        }
+
+        .gallery-strip,
+        .process-grid,
+        .review-grid,
+        .estimate-form {
+          grid-template-columns: 1fr;
+        }
+
+        .services-section .section-title {
+          position: static;
+        }
+
+        .services-section .section-title::after {
+          width: 100%;
+        }
+
+        .owner-points {
+          grid-template-columns: 1fr;
+        }
+
+        .area-note {
+          grid-template-columns: 1fr;
+        }
+
+        .image-rail {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .footer-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 440px) {
+        .nav-call strong {
+          font-size: 0.72rem;
+        }
+
+        .rating-card {
+          padding: 1rem;
+        }
+
+        .sticky-actions {
+          grid-template-columns: 1fr 88px;
+        }
+      }
+    </style>
+  </body>
+</html>

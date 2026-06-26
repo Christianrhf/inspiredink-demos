@@ -1,0 +1,175 @@
+---
+import "../../styles/global.css";
+import { hicLicense, phoneDisplay, phoneHref, serviceAreas, servicePages, sourceUrl } from "./data";
+
+const { service } = Astro.props;
+const relatedServices = servicePages.filter((item) => item.slug !== service.slug).slice(0, 5);
+---
+
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{service.title} | Kennedy Painting Pros</title>
+    <meta name="description" content={service.summary} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="site-nav" aria-label="Main navigation">
+      <a class="brand" href="/" aria-label="Kennedy Painting Pros home">
+        <img src="/images/kennedy/logo.png" alt="Kennedy Painting Pros logo" />
+        <span>
+          <strong>Kennedy Painting Pros</strong>
+          <small>New Haven painting contractor</small>
+        </span>
+      </a>
+
+      <nav class="nav-links" aria-label="Service navigation">
+        <a href="/#work">Work</a>
+        <a href="/#services">Services</a>
+        <a href="/#coverage">Service Area</a>
+        <a href="/#process">Process</a>
+        <a href="/#quote">Quote</a>
+      </nav>
+
+      <div class="nav-actions" aria-label="Contact controls">
+        <a class="nav-call" href={phoneHref}>Call now</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="service-hero">
+        <div class="service-hero-copy">
+          <a class="breadcrumb" href="/">Home / Services</a>
+          <p class="eyebrow">{service.eyebrow}</p>
+          <h1>{service.title}</h1>
+          <p class="lead">{service.summary}</p>
+          <div class="hero-actions">
+            <a class="primary-cta" href={phoneHref}>Call {phoneDisplay}</a>
+            <a class="secondary-cta" href="/#quote">
+              <span>Start</span>
+              <strong>Free estimate</strong>
+            </a>
+          </div>
+        </div>
+        <figure class="service-hero-image">
+          <img src={service.image} alt={`${service.title} by Kennedy Painting Pros`} />
+          <figcaption>{hicLicense}</figcaption>
+        </figure>
+      </section>
+
+      <section class="service-detail">
+        <aside class="service-summary-card">
+          <span>Service scope</span>
+          <h2>{service.title} in New Haven County</h2>
+          <ul>
+            {service.highlights.map((item) => <li>{item}</li>)}
+          </ul>
+          <a href={service.source} target="_blank" rel="noreferrer">Original Kennedy page</a>
+        </aside>
+
+        <div class="service-story">
+          {service.intro.map((paragraph) => <p>{paragraph}</p>)}
+          <div class="service-section-grid">
+            {
+              service.sections.map((section) => (
+                <article>
+                  <h3>{section.title}</h3>
+                  <p>{section.text}</p>
+                </article>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <section class="service-gallery-band">
+        <div class="section-kicker">
+          <p class="eyebrow">Project visuals</p>
+          <h2>Photos organized from the current Kennedy site.</h2>
+        </div>
+        <div class="service-gallery">
+          {
+            service.gallery.map((image, index) => (
+              <figure>
+                <img src={image} alt={`${service.title} project image ${index + 1}`} loading="lazy" />
+              </figure>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="service-local-links">
+        <div>
+          <p class="eyebrow">Service Area</p>
+          <h2>{service.title} across New Haven and Fairfield Counties.</h2>
+          <p>
+            Kennedy's current site already supports location pages for neighborhoods and nearby towns. This page links
+            that local footprint back into each service so users and search engines can understand coverage.
+          </p>
+        </div>
+        <div class="mini-area-grid">
+          {serviceAreas.slice(0, 8).map((area) => <a href={`${sourceUrl}${area.slug}/`} target="_blank" rel="noreferrer">{area.name}</a>)}
+        </div>
+      </section>
+
+      <section class="related-services">
+        <div class="section-kicker">
+          <p class="eyebrow">More painting services</p>
+          <h2>Keep exploring Kennedy Painting Pros.</h2>
+        </div>
+        <div class="related-grid">
+          {
+            relatedServices.map((item) => (
+              <a href={`/${item.slug}/`}>
+                <img src={item.image} alt="" loading="lazy" />
+                <strong>{item.title}</strong>
+                <span>{item.summary}</span>
+              </a>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="quote-lab service-quote" id="quote">
+        <div class="quote-copy">
+          <p class="eyebrow">Free estimate</p>
+          <h2>Talk through your {service.title.toLowerCase()} project.</h2>
+          <p>Call Kennedy Painting Pros to review scope, timing, surfaces, and next steps.</p>
+          <a class="quote-phone" href={phoneHref}>
+            <span>Call for a free estimate</span>
+            <strong>{phoneDisplay}</strong>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-brand">
+        <img src="/images/kennedy/logo.png" alt="Kennedy Painting Pros logo" />
+        <span>
+          <strong>Kennedy Painting Pros</strong>
+          <small>Interior, exterior, cabinet, deck</small>
+          <small>Fully licensed & insured</small>
+          <small>{hicLicense}</small>
+        </span>
+      </div>
+      <div class="footer-links">
+        <a href="/#services">Services</a>
+        <a href="/#coverage">Service Area</a>
+        <a href={service.source} target="_blank" rel="noreferrer">Source page</a>
+        <a href={phoneHref}>{phoneDisplay}</a>
+      </div>
+    </footer>
+
+    <a class="sticky-call" href={phoneHref}>
+      <span>Free estimate</span>
+      <strong>{phoneDisplay}</strong>
+    </a>
+  </body>
+</html>

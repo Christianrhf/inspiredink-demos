@@ -1,0 +1,14 @@
+---
+import ExteriorWashPage from "../../sites/exteriorwash/Page.astro";
+import { services } from "../../sites/exteriorwash/data";
+
+export function getStaticPaths() {
+  return services.map((service) => ({
+    params: { service: service.slug },
+  }));
+}
+
+const { service } = Astro.params;
+---
+
+<ExteriorWashPage serviceSlug={service} />

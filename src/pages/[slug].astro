@@ -1,0 +1,15 @@
+---
+import KennedyServicePage from "../sites/kennedy/ServicePage.astro";
+import { servicePages } from "../sites/kennedy/data";
+
+export function getStaticPaths() {
+  return servicePages.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+
+const { service } = Astro.props;
+---
+
+<KennedyServicePage service={service} />
